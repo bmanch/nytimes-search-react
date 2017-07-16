@@ -1,0 +1,37 @@
+var express = require("express");
+var bodyParser = require("body-parser");
+var logger = require("morgan");
+var mongoose = require("mongoose");
+var path = require("path");
+// var routes = require("./app/config/routes");
+var PORT = process.env.PORT || 3030;
+
+var app = express();
+
+app.use(logger("dev"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.text());
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+
+app.use(express.static(path.join(__dirname + "/public")));
+
+// Use this when ready to deploy: process.env.MONGODB_URI
+mongoose.connect("mongodb://localhost/nytreact");
+var db = mongoose.connection;
+
+db.on("error", function(error) {
+  console.log("Mongoose Error: ", error);
+});
+
+db.once("open", function() {
+  console.log("Mongoose connection successful.");
+});
+
+app.get("/", function(req, res) {
+  res.sendFile(path.join(__dirname + "/public/index.html"));
+});
+
+// app.use("/", routes);
+
+app.listen(PORT, console.log("Listening on port: " + PORT));
