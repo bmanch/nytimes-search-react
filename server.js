@@ -17,7 +17,7 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(express.static(path.join(__dirname + "/public")));
 
 // Use this when ready to deploy: process.env.MONGODB_URI
-mongoose.connect("mongodb://localhost/nytreact");
+mongoose.connect(process.env.MONGODB_URI);
 var db = mongoose.connection;
 
 db.on("error", function(error) {
