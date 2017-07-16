@@ -4,7 +4,7 @@
   "description": "MERN New York Times Search App",
   "main": "server.js",
   "scripts": {
-    "start": "webpack && node server",
+    "start": "node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
