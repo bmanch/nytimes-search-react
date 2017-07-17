@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {Link} from "react-router";
 import Saved from "./children/Saved";
 import Search from "./children/Search";
+import helpers from "./utils/helpers";
 
 class Main extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class Main extends Component {
       searchTerm: "",
       numArticles: "",
       startYear: "",
-      endYear: ""
+      endYear: "",
+      results: []
     };
 
     this.setTerm = this.setTerm.bind(this);
@@ -19,17 +21,39 @@ class Main extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState !== this.state) {
+      helpers.runQuery(this.state).then(data => {
+        if (data !== this.state.results) {
+          console.log(data);
+          this.setState({ results: data });
+        }
+      });
     }
   }
 
   setTerm(term) {
-    this.setState(term);
+    this.setState({
+      searchTerm: term.searchTerm,
+      numArticles: term.numArticles,
+      startYear: term.startYear,
+      endYear: term.endYear
+    });
+  }
+
+  saveArticle(title, date, url) {
+    let articleObject = {
+      title,
+      date,
+      url
+    }
+    console.log("main", articleObject);
+    helpers.saveArticle(articleObject);
   }
 
   render() {
 
     const clonedChildren = React.cloneElement(this.props.children, {
       setTerm: this.setTerm,
+      saveArticle: this.saveArticle,
       currentSearch: this.state
     });
 

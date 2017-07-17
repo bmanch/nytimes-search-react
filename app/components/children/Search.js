@@ -65,14 +65,13 @@ class Search extends React.Component {
                 <input name="endYear" type="text" className="form-control" id="end-year" value={this.state.endYear} onChange={this.handleChange} />
               </div>
               <button type="submit" className="btn btn-default" id="run-search"><i className="fa fa-search"></i> Search</button>
-              <button type="button" className="btn btn-default" id="clear-all"><i className="fa fa-trash"></i> Clear Results</button>
             </form>
           </div>
         </div>
 
         <div className="row">
           <Query currentSearch={this.props.currentSearch} />
-          <Results />
+          <Results currentSearch={this.props.currentSearch.results} saveArticle={this.props.saveArticle} />
         </div>
       </div>
     );

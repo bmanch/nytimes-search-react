@@ -3,7 +3,7 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 var path = require("path");
-// var routes = require("./app/config/routes");
+var routes = require("./controllers/api_routes");
 var PORT = process.env.PORT || 3030;
 
 var app = express();
@@ -17,6 +17,7 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 app.use(express.static(path.join(__dirname + "/public")));
 
 // Use this when ready to deploy: process.env.MONGODB_URI
+// For local host: "mongodb://localhost/nytreact"
 mongoose.connect(process.env.MONGODB_URI);
 var db = mongoose.connection;
 
@@ -32,6 +33,6 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname + "/public/index.html"));
 });
 
-// app.use("/", routes);
+app.use("/api/", routes);
 
 app.listen(PORT, console.log("Listening on port: " + PORT));
