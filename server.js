@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname + "/public")));
 
 // Use this when ready to deploy: process.env.MONGODB_URI
 // For local host: "mongodb://localhost/nytreact"
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect("mongodb://localhost/nytreact", { useMongoClient: true });
 var db = mongoose.connection;
 
 db.on("error", function(error) {
@@ -29,7 +29,7 @@ db.once("open", function() {
   console.log("Mongoose connection successful.");
 });
 
-app.get("/", function(req, res) {
+app.get("/*", function(req, res) {
   res.sendFile(path.join(__dirname + "/public/index.html"));
 });
 

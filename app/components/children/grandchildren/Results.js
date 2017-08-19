@@ -1,8 +1,46 @@
-import React from "react";
+import React, { Component } from "react";
+import helpers from "../../utils/helpers";
 
-const Results = props => {
+class Results extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      title: "",
+      date: "",
+      url: ""
+    };
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(item) {
+    console.log("clicked");
+    console.log(item);
+
+    helpers.saveArticle(item).then(data => {
+      console.log(data);
+    });
+  }
+
+  render() {
+    if (!this.props.results) {
+      return (
+        <div className="col-sm-12">
+          <div className="panel panel-primary">
+            <div className="panel-heading text-center">
+              <h3 className="panel-title"><strong><i className="fa fa-table"></i>   Your Search Results</strong></h3>
+            </div>
+            <div className="panel-body text-center">
+              <em> Enter search terms to begin...</em>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
-      <div className="col-sm-8">
+      <div className="col-sm-12">
         <div className="panel panel-primary">
           <div className="panel-heading text-center">
             <h3 className="panel-title"><strong><i className="fa fa-table"></i>   Your Search Results</strong></h3>
@@ -23,6 +61,7 @@ const Results = props => {
         </div>
       </div>
     );
+  }
 }
 
 export default Results;

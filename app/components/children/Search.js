@@ -1,17 +1,18 @@
-import React from "react";
+import React, { Component } from "react";
 import {Link} from "react-router";
+import helpers from "../utils/helpers";
 import Query from "./grandchildren/Query";
 import Results from "./grandchildren/Results";
 
-class Search extends React.Component {
+class Search extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       searchTerm: "",
-      numArticles: "5",
       startYear: "",
-      endYear: ""
+      endYear: "",
+      results: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -26,10 +27,19 @@ class Search extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.setTerm(this.state);
+    // this.props.setTerm(this.state);
+
+    let currentSearch = this.state;
+
+    helpers.runQuery(currentSearch).then(data => {
+      if (data !== this.state.results) {
+        console.log(data);
+        this.setState({ results: data });
+      }
+    });
+
     this.setState({
       searchTerm: "",
-      numArticles: "5",
       startYear: "",
       endYear: ""
     });
@@ -40,21 +50,13 @@ class Search extends React.Component {
       <div className="col-sm-12">
         <div className="panel panel-primary">
           <div className="panel-heading">
-            <h3 className="panel-title"><strong><i className="fa  fa-list-alt"></i>   Search</strong></h3>
+            <h3 className="panel-title"><strong><i className="fa fa-list-alt"></i>   Search</strong></h3>
           </div>
           <div className="panel-body">
             <form onSubmit={this.handleSubmit} role="form">
               <div className="form-group">
                 <label htmlFor="search-term">Search Term:</label>
                 <input name="searchTerm" type="text" className="form-control" id="search-term" value={this.state.searchTerm} onChange={this.handleChange} />
-              </div>
-              <div className="form-group">
-                <label htmlFor="num-records-select">Number of Records to Retrieve:</label>
-                <select name="numArticles" className="form-control" id="num-records-select" value={this.state.numArticles} onChange={this.handleChange}>
-                  <option value="1">1</option>
-                  <option value="5">5</option>
-                  <option value="10">10</option>
-                </select>
               </div>
               <div className="form-group">
                 <label htmlFor="start-year">Start Year (Optional):</label>
@@ -70,8 +72,7 @@ class Search extends React.Component {
         </div>
 
         <div className="row">
-          <Query currentSearch={this.props.currentSearch} />
-          <Results currentSearch={this.props.currentSearch.results} saveArticle={this.props.saveArticle} />
+          <Results currentSearch={this.state.results} />
         </div>
       </div>
     );
