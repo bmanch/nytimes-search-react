@@ -41,7 +41,7 @@ class Saved extends Component {
       <div className="col-sm-12">
         <div className="panel panel-primary">
           <div className="panel-heading text-center">
-            <h3 className="panel-title"><strong><i className="fa fa-table"></i>   Your Search Results</strong></h3>
+            <h3 className="panel-title"><strong><i className="fa fa-table"></i>   Saved Articles</strong></h3>
           </div>
           <div className="panel-body">
             {this.state.savedArticles.map((article, i) => {

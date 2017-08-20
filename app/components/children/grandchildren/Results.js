@@ -26,7 +26,7 @@ class Results extends Component {
 
     helpers.saveArticle(saveObject).then(data => {
       console.log(data);
-      
+
       this.setState({
         title,
         date,
@@ -57,7 +57,7 @@ class Results extends Component {
       <div className="col-sm-12">
         <div className="panel panel-primary">
           <div className="panel-heading text-center">
-            <h3 className="panel-title"><strong><i className="fa fa-table"></i>   Your Search Results</strong></h3>
+            <h3 className="panel-title"><strong><i className="fa fa-table"></i>   Search Results</strong></h3>
           </div>
           <div className="panel-body">
             {this.props.currentSearch.map((search, i) => {
