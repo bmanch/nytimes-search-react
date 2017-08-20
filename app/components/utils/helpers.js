@@ -17,8 +17,7 @@ const helpers = {
         "q": term,
         "begin_date": start,
         "end_date": end
-      },
-      withCredentials: false
+      }
     }).then(results => {
       
       let trunc = results.data.response.docs;
