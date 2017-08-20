@@ -2,6 +2,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+mongoose.Promise = Promise;
 var path = require("path");
 var routes = require("./controllers/api_routes");
 var PORT = process.env.PORT || 3030;
@@ -29,10 +30,10 @@ db.once("open", function() {
   console.log("Mongoose connection successful.");
 });
 
-app.get("/*", function(req, res) {
+app.use("/api/", routes);
+
+app.get("*", function(req, res) {
   res.sendFile(path.join(__dirname + "/public/index.html"));
 });
-
-app.use("/api/", routes);
 
 app.listen(PORT, console.log("Listening on port: " + PORT));

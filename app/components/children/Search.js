@@ -27,22 +27,35 @@ class Search extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    // this.props.setTerm(this.state);
 
     let currentSearch = this.state;
+    let sy = parseInt(this.state.startYear);
+    let ey = parseInt(this.state.endYear);
 
-    helpers.runQuery(currentSearch).then(data => {
-      if (data !== this.state.results) {
-        console.log(data);
-        this.setState({ results: data });
-      }
-    });
+    console.log(sy, ey);
 
-    this.setState({
-      searchTerm: "",
-      startYear: "",
-      endYear: ""
-    });
+    if (this.state.searchTerm === "" || this.state.startYear === "" || this.state.endYear === "" || sy > ey) {
+      
+      alert(`Please make sure to fill out each field. Also make sure to have an end year that is after or the same as the start year.`);
+
+    } else {
+
+      helpers.runQuery(currentSearch).then(data => {
+        if (!data) {
+          alert("Sorry, but that search didn't yield any articles.");
+        } else if (data !== this.state.results) {
+          // console.log(data);
+          // this.setState({ results: data });
+
+          this.setState({
+            searchTerm: "",
+            startYear: "",
+            endYear: "",
+            results: data
+          });
+        }
+      });
+    }
   }
 
   render() {
@@ -59,11 +72,11 @@ class Search extends Component {
                 <input name="searchTerm" type="text" className="form-control" id="search-term" value={this.state.searchTerm} onChange={this.handleChange} />
               </div>
               <div className="form-group">
-                <label htmlFor="start-year">Start Year (Optional):</label>
+                <label htmlFor="start-year">Start Year (e.g., 2000):</label>
                 <input name="startYear" type="text" className="form-control" id="start-year" value={this.state.startYear} onChange={this.handleChange} />
               </div>
               <div className="form-group">
-                <label htmlFor="end-year">End Year (Optional):</label>
+                <label htmlFor="end-year">End Year (e.g., 2001):</label>
                 <input name="endYear" type="text" className="form-control" id="end-year" value={this.state.endYear} onChange={this.handleChange} />
               </div>
               <button type="submit" className="btn btn-default" id="run-search"><i className="fa fa-search"></i> Search</button>

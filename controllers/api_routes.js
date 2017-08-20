@@ -21,11 +21,11 @@ router.post("/save", function(req, res) {
   });
 });
 
-router.delete("/saved", function(req, res) {
+router.delete("/remove", function(req, res) {
 
-  var url = req.param("url");
+  var curURL = req.param("url");
 
-  Articles.find({ url: url }).remove().exec(function(err, doc) {
+  Articles.findOneAndRemove({ url: curURL }, function(err, doc) {
     if (err) throw err;
     res.json("Deleted");
   });
