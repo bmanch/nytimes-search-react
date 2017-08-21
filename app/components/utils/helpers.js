@@ -1,8 +1,5 @@
 import axios from "axios";
 
-// const nyTimesApiKey = process.env.NY_API;
-const nyTimesApiKey = "2034e48040bb4dee84ced6351fbf9a74";
-
 const helpers = {
   runQuery: (searchObject) => {
 
@@ -14,7 +11,7 @@ const helpers = {
 
     return axios.get("https://api.nytimes.com/svc/search/v2/articlesearch.json", {
       params: {
-        "api-key": nyTimesApiKey,
+        "api-key": process.env.NY_API,
         "q": term,
         "begin_date": start,
         "end_date": end
