@@ -6,7 +6,7 @@ class Saved extends Component {
     super(props);
 
     this.state = {
-      savedArticles: ""
+      savedArticles: []
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -27,12 +27,17 @@ class Saved extends Component {
   }
 
   render() {
-    if (!this.state.savedArticles) {
+    if (this.state.savedArticles.length === 0) {
       return (
         <div className="col-sm-12 text-center">
-          <br />
-          <br />
-          <em>No articles saved. Save your first article and then see it here!</em>
+          <div className="panel panel-primary">
+            <div className="panel-heading text-center">
+              <h3 className="panel-title"><strong><i className="fa fa-table"></i>   Saved Articles</strong></h3>
+            </div>
+            <div className="panel-body text-center">
+              <em>No articles saved. Save an article and see it here!</em>
+            </div>
+          </div>
         </div>
       );
     }

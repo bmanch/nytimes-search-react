@@ -46,7 +46,7 @@ class Results extends Component {
               <h3 className="panel-title"><strong><i className="fa fa-table"></i>   Your Search Results</strong></h3>
             </div>
             <div className="panel-body text-center">
-              <em> Enter search terms to begin...</em>
+              <em>Enter search terms to begin...</em>
             </div>
           </div>
         </div>
