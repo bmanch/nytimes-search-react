@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname + "/public")));
 
 // Use this when ready to deploy: process.env.MONGODB_URI
 // For local host: "mongodb://localhost/nytreact"
-mongoose.connect("mongodb://localhost/nytreact", { useMongoClient: true });
+mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
 var db = mongoose.connection;
 
 db.on("error", function(error) {
